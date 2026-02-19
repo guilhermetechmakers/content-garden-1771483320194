@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Image, FileText, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -55,7 +56,9 @@ export function Library() {
           <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[rgb(var(--border))] py-16">
             <Image className="h-12 w-12 text-muted-foreground" />
             <p className="mt-4 text-muted-foreground">Images & videos with provenance</p>
-            <Button variant="outline" className="mt-4">Upload asset</Button>
+            <Button variant="outline" className="mt-4" asChild>
+            <Link to="/asset-manager/new">Upload asset</Link>
+          </Button>
           </div>
         </TabsContent>
       </Tabs>

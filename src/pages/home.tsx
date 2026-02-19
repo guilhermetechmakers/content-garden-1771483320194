@@ -10,6 +10,8 @@ import {
   ChevronRight,
   Sparkles,
 } from 'lucide-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -21,6 +23,7 @@ import {
 } from '@/components/ui/card'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
+import { seedService } from '@/services/seedService'
 
 const quickActions = [
   { icon: LinkIcon, label: 'Paste link', to: '/garden' },
@@ -36,6 +39,31 @@ const recentSeeds = [
 
 export function Home() {
   const [captureValue, setCaptureValue] = useState('')
+  const queryClient = useQueryClient()
+  const captureMutation = useMutation({
+    mutationFn: (content: string) =>
+      seedService.create({
+        content: content.trim(),
+        type: content.trim().startsWith('http') ? 'link' : 'thought',
+      }),
+    onSuccess: () => {
+      setCaptureValue('')
+      queryClient.invalidateQueries({ queryKey: ['seeds'] })
+      toast.success('Seed captured')
+    },
+    onError: (err: { message?: string }) => {
+      toast.error(err?.message ?? 'Failed to capture seed')
+    },
+  })
+
+  const handleCapture = () => {
+    const value = captureValue.trim()
+    if (!value) {
+      toast.error('Enter a link or thought to capture')
+      return
+    }
+    captureMutation.mutate(value)
+  }
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -69,8 +97,13 @@ export function Home() {
               ))}
             </div>
           </div>
-          <Button size="lg" className="shrink-0">
-            Capture
+          <Button
+            size="lg"
+            className="shrink-0 transition-transform hover:scale-[1.02]"
+            onClick={handleCapture}
+            disabled={captureMutation.isPending || !captureValue.trim()}
+          >
+            {captureMutation.isPending ? 'Capturing…' : 'Capture'}
           </Button>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">

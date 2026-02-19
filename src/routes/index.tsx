@@ -13,6 +13,10 @@ import { DropEditor } from '@/pages/drops/editor'
 import { Runway } from '@/pages/runway'
 import { Snippets } from '@/pages/snippets'
 import { Library } from '@/pages/library'
+import { AssetManagerPage } from '@/pages/asset-manager'
+import { AssetManagerDetail } from '@/pages/asset-manager/detail'
+import { AssetManagerNew } from '@/pages/asset-manager/new'
+import { AssetManagerEdit } from '@/pages/asset-manager/edit'
 import { DescribeToFind } from '@/pages/search'
 import { Profile } from '@/pages/profile'
 import { Settings } from '@/pages/settings'
@@ -40,6 +44,10 @@ export const router = createBrowserRouter([
       { path: 'runway', element: <Runway /> },
       { path: 'snippets', element: <Snippets /> },
       { path: 'library', element: <Library /> },
+      { path: 'asset-manager', element: <AssetManagerPage /> },
+      { path: 'asset-manager/new', element: <AssetManagerNew /> },
+      { path: 'asset-manager/:id', element: <AssetManagerDetail /> },
+      { path: 'asset-manager/:id/edit', element: <AssetManagerEdit /> },
       { path: 'search', element: <DescribeToFind /> },
       { path: 'profile', element: <Profile /> },
       { path: 'settings', element: <Settings /> },

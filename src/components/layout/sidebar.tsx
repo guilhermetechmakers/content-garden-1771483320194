@@ -7,6 +7,7 @@ import {
   Plane,
   FileText,
   Library,
+  Image,
   Search,
   ChevronLeft,
   ChevronRight,
@@ -30,6 +31,7 @@ const navItems = [
   { to: '/runway', label: 'Runway', icon: Plane },
   { to: '/snippets', label: 'Snippets', icon: FileText },
   { to: '/library', label: 'Library', icon: Library },
+  { to: '/asset-manager', label: 'Asset Manager', icon: Image },
   { to: '/search', label: 'Describe-to-Find', icon: Search },
 ] as const
 
